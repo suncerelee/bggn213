@@ -2,7 +2,7 @@
 title: "lecture 09"
 author: "Sunyoung Lee"
 date: "February 5, 2020"
-output: github_format
+output: github_document
 ---
 ## K-means clustering
 
