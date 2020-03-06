@@ -1,0 +1,252 @@
+---
+title: 'class 6: R functions'
+author: "Sunyoung Lee"
+date: "January 24, 2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## This is a level 2 heading
+
+This is a **regular** old *text*!
+
+and a list of stuff
+
+
+
+- thing one
+- ting two
+- and another thing
+
+
+```{r}
+plot(1:5, col="blue", type="o")
+```
+
+let's insert a code chunk with the shortcut `Option-CMD-i`:
+
+```{r}
+x <- c(1:10)
+x
+```
+
+Here is my analysis of your new data. It looks ok.. the mean of your data is `r mean(x)`.
+
+## More on reading input files
+
+We will use the read.table() function again.
+
+```{r}
+read.table("test1.txt")
+```
+```{r}
+x <- read.table("test1.txt", header = TRUE, sep=",")
+```
+
+```{r}
+read.csv("test1.txt")
+```
+
+Try the 2nd file
+
+```{r}
+read.table("test2.txt", sep="$", header=T)
+```
+
+```{r}
+read.table("test3.txt")
+```
+
+## Our first function
+
+This is an example function named `add` with input `x` and `y`
+
+```{r}
+add <- function(x, y=1) {
+ # Sum the input x and y
+ x + y
+}
+```
+
+Lets try using it
+
+^
+```{r}
+add(x=c(1,6,2),y=4)
+```
+
+```{r}
+add(1,6)
+```
+
+
+
+
+
+
+
+```{r}
+x <- c(10,4,22,6)
+min(x)
+max(x)
+#range(x)
+```
+
+A 2nd example function to re-scale data to lie between 0 and 1
+
+```{r}
+rescale <- function(x) {
+ rng <-range(x)
+ (x - rng[1]) / (rng[2] - rng[1])
+}
+```
+
+Lets test this function
+
+```{r}
+rescale(c(1:10, 30, 100))
+```
+
+```{r}
+rescale( c(1:10, NA))
+```
+
+```{r}
+x <- c(1:10, NA)
+rng <- range(x, na.rm=T)
+rng
+```
+```{r}
+?range
+```
+
+```{r}
+rescale2 <- function(x) {
+  rng <- range(x, na.rm=TRUE)
+  (x - rng[1]) / (rng[2]-rng[1])
+}
+
+```
+
+
+```{r}
+rescale2( c(1:10, NA) )
+```
+
+Taking things a bit too far...
+
+```{r}
+rescale3 <- function(x, na.rm=TRUE, plot=FALSE) {
+ if(na.rm) {
+ rng <-range(x, na.rm=na.rm)
+ } else {
+ rng <-range(x)
+ }
+ print("Hello")
+ 
+ answer <- (x - rng[1]) / (rng[2] - rng[1])
+
+ 
+ print("is it me you are looking for?")
+ if(plot) {
+print("please don't sing again!")
+ plot(answer, typ="b", lwd=4)
+ }
+ print("I can see it in ...")
+}
+```
+
+```{r}
+rescale3(x, plot=TRUE)
+```
+
+
+
+## Working with the bio3d package
+
+To use the functions from any packagewe have installed we use the `library()` function to load it. 
+
+```{r}
+library(bio3d)
+```
+
+
+```{r}
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+```{r}
+hc <- hclust( dist( rbind(s1.b, s2.b, s3.b) ) )
+plot(hc)
+```
+
+
+```{r}
+s1 <- read.pdb("4AKE")
+s1
+```
+```{r}
+class(s1)
+```
+
+```{r}
+str(s1)
+```
+
+
+```{r}
+s1$seqres
+```
+
+```{r}
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s1.chainA
+```
+
+```{r}
+?trim.pdb
+```
+
+
+```{r}
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+points(s2.b, col="light blue", typ="l", lwd =3)
+points(s3.b, col="pink", typ="l", lwd = 3)
+```
+
+```{r}
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s1, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
