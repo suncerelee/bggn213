@@ -13,13 +13,20 @@ virus <- read.csv(url)
 tail(virus)
 ```
 
-    ##      Province.State Country.Region      Lat     Long       date cases      type
-    ## 2881         Shanxi Mainland China  37.5777 112.2922 2020-03-05     2 recovered
-    ## 2882        Sichuan Mainland China  30.6171 102.7103 2020-03-05    19 recovered
-    ## 2883        Tianjin Mainland China  39.3054 117.3230 2020-03-05     4 recovered
-    ## 2884       Victoria      Australia -37.8136 144.9631 2020-03-05     3 recovered
-    ## 2885       Xinjiang Mainland China  41.1129  85.2401 2020-03-05     1 recovered
-    ## 2886       Zhejiang Mainland China  29.1832 120.0934 2020-03-05    10 recovered
+    ##      Province.State      Country.Region     Lat     Long       date cases
+    ## 3622       Shanghai      Mainland China 31.2020 121.4491 2020-03-10     4
+    ## 3623         Shanxi      Mainland China 37.5777 112.2922 2020-03-10     4
+    ## 3624        Sichuan      Mainland China 30.6171 102.7103 2020-03-10    12
+    ## 3625         Taiwan Taipei and environs 23.7000 121.0000 2020-03-10     2
+    ## 3626        Tianjin      Mainland China 39.3054 117.3230 2020-03-10     1
+    ## 3627       Zhejiang      Mainland China 29.1832 120.0934 2020-03-10    15
+    ##           type
+    ## 3622 recovered
+    ## 3623 recovered
+    ## 3624 recovered
+    ## 3625 recovered
+    ## 3626 recovered
+    ## 3627 recovered
 
 > Q1. How many total infected cases are there around the world?
 
@@ -28,7 +35,7 @@ total_cases <- sum(virus$cases)
 total_cases
 ```
 
-    ## [1] 155031
+    ## [1] 187075
 
 Lets have a look at the *$type* column
 
@@ -38,7 +45,7 @@ table(virus$type)
 
     ## 
     ## confirmed     death recovered 
-    ##      1593       212      1081
+    ##      2112       274      1241
 
 > Q2. How many deaths linked to infected cases have there been?
 
@@ -48,7 +55,7 @@ death_cases <- sum(virus[inds,"cases"])
 death_cases
 ```
 
-    ## [1] 3348
+    ## [1] 4262
 
 > Q3. What is the overall death rate?
 
@@ -56,7 +63,7 @@ death_cases
 round(death_cases/total_cases * 100, 2)
 ```
 
-    ## [1] 2.16
+    ## [1] 2.28
 
 > Q4. What is the death rate in "Mainland China"?
 
@@ -66,7 +73,7 @@ library(tidyverse)
 
     ## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
 
-    ## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
+    ## ✓ ggplot2 3.3.0     ✓ purrr   0.3.3
     ## ✓ tibble  2.1.3     ✓ dplyr   0.8.4
     ## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
     ## ✓ readr   1.3.1     ✓ forcats 0.4.0
@@ -93,7 +100,7 @@ death_rate_mc%>%
     ## # A tibble: 1 x 1
     ##    rate
     ##   <dbl>
-    ## 1  2.22
+    ## 1  2.18
 
 > Q5. What is the death rate in Italy, Iran and the US?
 
@@ -112,10 +119,9 @@ death_rate_all%>%
   select(Country.Region, rate)
 ```
 
-    ## # A tibble: 3 x 2
-    ## # Groups:   Country.Region [3]
+    ## # A tibble: 2 x 2
+    ## # Groups:   Country.Region [2]
     ##   Country.Region  rate
     ##   <fct>          <dbl>
-    ## 1 Iran            2.45
-    ## 2 Italy           3.35
-    ## 3 US              4.98
+    ## 1 Italy           5.49
+    ## 2 US              3.45
