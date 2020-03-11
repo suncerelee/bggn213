@@ -12,7 +12,7 @@ This is my classwork from BGGN-213 Winter quarter 2020 at UC San Diego.
 - Class 11: Find a gene assignment
 - Class 12: [Structural Bioinformatics](https://github.com/suncerelee/bggn213/blob/master/class12/class12.md)
 - Class 13: [Bioinformatics in drug discovery and design](https://github.com/suncerelee/bggn213/blob/master/class13/class13.md)
-- Class 14: [Genome informatics and high throughput sequencing](
+- Class 14: [Genome informatics and high throughput sequencing](https://github.com/suncerelee/bggn213/blob/master/class14/class14.Rmd)
 - Class 15: [Transcriptomics and analysis of RNA-seq data](https://github.com/suncerelee/bggn213/blob/master/class15/class15.md)
 - Class 16: [Genome annotation and the interpretation of gene list](https://github.com/suncerelee/bggn213/blob/master/class16/class16.md)
 - Class 17: [Biological network analysis](https://github.com/suncerelee/bggn213/blob/master/class17/class17corona.md)
